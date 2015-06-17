@@ -730,7 +730,8 @@ resolve_types(Data, Enums) -> resolve_types (Data, Data, Enums, []).
 resolve_types([{TypePath, Fields,Extended} | Tail], AllPaths, Enums, Acc) ->
     FolderFun = fun (Input, TmpAcc) ->
               case Input of
-                  {Index, Rules, Type, Identifier, Other} ->
+                  {Index, Rules, Type0, Identifier, Other} ->
+                      Type = string:to_lower(Type0), %% MOYO Change: fix compiling problem with type names
                   case is_scalar_type(Type) of
                       true -> [Input | TmpAcc];
                       false ->
